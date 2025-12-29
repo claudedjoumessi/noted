@@ -66,7 +66,7 @@ const CommandPalette = ({ editor }: { editor: Editor | null }) => {
   return (
     <div className="h-full flex flex-col gap-3 items-center justify-center px-9 z-50">
       {menu.map((item, index) => (
-        <div className="flex shadow-xl p-2 rounded-3xl bg-neutral-900/60">
+        <div className="flex shadow-2xl p-2 rounded-3xl bg-neutral-900/70">
           <div key={index} className="flex flex-col gap-2">
             {item.map((item, index) => (
               <Toggle

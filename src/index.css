@@ -149,17 +149,15 @@
 @layer components{
   h1,
   h2 {
-    margin-top: 3.5rem;
-    margin-bottom: 1.5rem;
     line-height: 1.1;
-    margin-top: 2.5rem;
     text-wrap: pretty;
   }
   h1 {
-    font-size: 1.6rem;
-    @apply font-bold;
+    font-size: 1.6em;
+    @apply font-bold mt-12 mb-5;
   }
   h2 {
-    font-size: 1.2rem;
+    font-size: 1.2em;
+    @apply font-medium mt-10 mb-4;
   }
 }
