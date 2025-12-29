@@ -1,46 +1,101 @@
-import React from 'react'
-import { Button } from './ui/button'
-import { ALargeSmall, Copy, Pencil, Scissors, SquareChartGanttIcon, TypeIcon } from 'lucide-react'
-
-const palette = [
-    {
-        icon: <SquareChartGanttIcon className='size-5'/>,
-        action: 'Create Task'
-    },
-    {
-        icon: <Pencil className='size-5'/>,
-        action: 'Edit Task'
-    },
-    {
-        icon: <Scissors className='-rotate-90 size-5' />,
-        action: 'Delete Task'
-    },
-    {
-        icon: <TypeIcon className='size-5'/>,
-        action: 'Create Note'
-    },
-    {
-        icon: <ALargeSmall className='size-5'/>,
-        action: 'Modify Case'
-    }
-]
+import {
+  Bold,
+  Heading1,
+  Heading2,
+  Italic,
+  Strikethrough,
+  Underline,
+} from "lucide-react";
+import { useEditorState, type Editor } from "@tiptap/react";
+import { Toggle } from "./ui/toggle";
 
 
-const CommandPalette = () => {
+const CommandPalette = ({editor}: {editor: Editor | null}) => {
+  if(!editor) return null;
+
+  const editorState = useEditorState({
+    editor,
+    selector: ctx => {
+      return {
+        isBold: ctx.editor.isActive('bold') ?? false,
+        isItalic: ctx.editor.isActive('italic') ?? false,
+        isStrike: ctx.editor.isActive('strike') ?? false,
+        isHeading1: ctx.editor.isActive('heading', { level: 1 }) ?? false,
+        isHeading2: ctx.editor.isActive('heading', { level: 2 }) ?? false,
+        isBulletList: ctx.editor.isActive('bulletList') ?? false,
+        isOrderedList: ctx.editor.isActive('orderedList') ?? false
+      }
+    },
+  })
+
+  const bisActions = [
+    {
+      icon: <Bold className="size-5" />,
+      label: "Bold Text",
+      onClick:() => editor.chain().focus().toggleBold().run(),
+      isPressed: editorState.isBold
+    },
+    {
+      icon: <Italic className="size-5" />,
+      label: "Italicize Text",
+      onClick: () => editor.chain().focus().toggleItalic().run(),
+      isPressed: editorState.isItalic
+    },
+    {
+      icon: <Strikethrough className="size-5" />,
+      label: "Strikethrough Text",
+      onClick: () => editor.chain().focus().toggleStrike().run(),
+      isPressed: editorState.isStrike
+    },
+  ];
+  const headings = [
+    {
+      icon: <Heading1 className="size-5" />,
+      label: "Heading 1",
+      onClick:() => editor.chain().focus().toggleHeading({ level: 1 }).run(),
+      isPressed: editorState.isHeading1
+    },
+    {
+      icon: <Heading2 className="size-5" />,
+      label: "Heading 2",
+      onClick:() => editor.chain().focus().toggleHeading({ level: 2 }).run(),
+      isPressed: editorState.isHeading2
+    },
+  ]
   return (
-    /* top-1/2 left-9 -translate-y-1/2 */
-    <div className='h-full flex items-center justify-center px-9'>
-    <div className="flex shadow-xl p-2 rounded-3xl bg-neutral-900/60">
-      <div className="flex flex-col gap-2">
-        {palette.map((item, index) => (
-            <Button key={index} size={"icon-lg"} variant={"ghost"} className="rounded-2xl shadow p-5.5 transition-all">
-            {item.icon}
-          </Button>
-        ))}
+    <div className="h-full flex flex-col gap-3 items-center justify-center px-9 z-50">
+      <div className="flex shadow-xl p-2 rounded-3xl bg-neutral-900/60">
+        <div className="flex flex-col gap-2">
+          {bisActions.map((item, index) => (
+            <Toggle
+              key={index}
+              size={"lg"}
+              pressed={item.isPressed}
+              onPressedChange={item.onClick}
+              className="rounded-xl"
+            >
+              {item.icon}
+            </Toggle>
+          ))}
+        </div>
+      </div>
+      <div className="flex shadow-xl p-2 rounded-3xl bg-neutral-900/60">
+        <div className="flex flex-col gap-2">
+          {headings.map((item, index) => (
+            <Toggle
+              key={index}
+              size={"lg"}
+              pressed={item.isPressed}
+              onPressedChange={item.onClick}
+              className="rounded-xl"
+            >
+              {item.icon}
+            </Toggle>
+          ))}
+        </div>
       </div>
     </div>
-        </div>
   );
-}
+};
 
-export default CommandPalette
+export default CommandPalette;
