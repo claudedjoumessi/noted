@@ -1,12 +1,11 @@
-import React from 'react'
-import CommandPalette from './components/CommandPalette'
+import React from "react";
+import CommandPalette from "./components/CommandPalette";
+import EditorArea from "./components/EditorArea";
 
 const App = () => {
   return (
-    <div>
-      <CommandPalette />
-    </div>
-  )
-}
+    <EditorArea />
+  );
+};
 
-export default App
+export default App;

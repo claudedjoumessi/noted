@@ -1,6 +1,23 @@
 @import 'tailwindcss';
 @import "tw-animate-css";
 
+@font-face {
+  font-family: 'Figtree';
+  src: url('/fonts/Figtree-VariableFont_wght.ttf') format('ttf');
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Figtree';
+  src: url('/fonts/Figtree-Italic-VariableFont_wght.ttf') format('ttf');
+  font-weight: 300 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -119,5 +136,28 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  /* Targeting the .tiptap class inside .editor-area > div
+     it covers the whole space available
+  */
+  .editor-area > div, .editor-area > div .tiptap {
+    @apply h-full w-full text-xl;
+    font-family: Figtree, sans-serif;
+  }
+}
+
+@layer components{
+  h1,
+  h2 {
+    line-height: 1.1;
+    text-wrap: pretty;
+  }
+  h1 {
+    font-size: 1.7em;
+    @apply font-bold mt-12 mb-5;
+  }
+  h2 {
+    font-size: 1.2em;
+    @apply font-bold mt-8 mb-4;
   }
 }
