@@ -62,6 +62,7 @@
 }
 
 :root {
+    font-family: Figtree, sans-serif;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -141,8 +142,14 @@
      it covers the whole space available
   */
   .editor-area > div, .editor-area > div .tiptap {
-    @apply h-full w-full text-xl;
-    font-family: Figtree, sans-serif;
+    @apply h-full w-full;
+  }
+  /* 
+    Small fix to prevent text enlargement
+    on elements outside the editor scope.
+  */
+  .editor-area > div .tiptap {
+    @apply text-xl;
   }
 }
 
